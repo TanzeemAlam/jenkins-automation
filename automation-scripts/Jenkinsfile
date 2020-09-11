@@ -1,0 +1,39 @@
+pipeline
+{
+	agent any
+
+	stages
+	{
+		stage('Checkout Code')
+		{
+			steps
+			{
+				git credentialsId: '87e66f55-a6ce-4b0f-a2b0-723d607dc227', url: 'https://github.com/heenasharma11/java_maven_CICD_app.git'
+			}
+		}
+		stage('Build Code')
+		{
+			steps
+			{
+				sh 'mvn -Dmaven.test.failure.ignore clean package'
+			}
+		}
+		stage('Test Code')
+		{
+			steps
+			{
+				sh 'mvn test'
+			}
+		}
+		stage('Deploy')
+		{
+			steps
+			{
+				withCredentials([sshUserPrivateKey(credentialsId: 'my-ec2-instance-credentials', keyFileVariable: 'keyFile')])
+				{
+					sh 'scp -o StrictHostKeyChecking=no -i ${keyFile} maven-project/target/maven-project.war ec2-user@3.18.108.104:/home/ec2-user/apache-tomcat-9.0.37/webapps/'
+				}
+			}
+		}
+	}
+}
