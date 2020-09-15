@@ -8,24 +8,27 @@ pipeline
 		{
 			steps
 			{
-				git credentialsId: '87e66f55-a6ce-4b0f-a2b0-723d607dc227', url: 'https://github.com/heenasharma11/java_maven_CICD_app.git'
+				checkout scm
 			}
 		}
+
 		stage('Build Code')
 		{
 			steps
 			{
-				sh 'mvn -Dmaven.test.failure.ignore clean package'
+				sh 'cd maven-project && mvn clean package'
 			}
 		}
+
 		stage('Test Code')
 		{
 			steps
 			{
-				sh 'mvn test'
+				sh 'cd maven-project && mvn test'
 			}
 		}
-		stage('Deploy')
+
+		stage('Deploy Code')
 		{
 			steps
 			{
