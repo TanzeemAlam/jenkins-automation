@@ -1,0 +1,22 @@
+pipeline
+{
+  agent any
+  stages
+  {
+    stage('Checkout Code')
+    {
+      steps
+      {
+        git credentialsId: '5f7ea1fb-d023-48c3-8f16-7a2d7e055e9e', url: 'https://github.com/TanzeemAlam/jenkins-automation.git'
+      }
+    }
+    stage('Build Code')
+    {
+      steps
+      {
+        sh 'cd maven-project'
+        sh 'mvn -Dmaven.test.failure.ignore clean package'
+      }
+    }
+  }
+}
