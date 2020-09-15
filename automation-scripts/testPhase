@@ -1,0 +1,22 @@
+pipeline
+{
+  agent any
+  stages
+  {
+    stage('Unit Testing')
+    {
+      steps
+      {
+        sh 'echo "Some unit testing"'
+      }
+    }
+    stage('Integration Testing')
+    {
+      steps
+      {
+        sh 'echo "Some integration testing"'
+      }
+    }
+  }
+}
+        
