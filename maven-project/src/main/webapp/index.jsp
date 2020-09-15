@@ -1,5 +1,5 @@
 <html>
 <body>
-<h2>This is my first Ci/Cd Pipeline</h2>
+<h2>Github webhook Trigger successfull.</h2>
 </body>
 </html>
