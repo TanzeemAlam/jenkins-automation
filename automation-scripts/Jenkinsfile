@@ -8,7 +8,7 @@ pipeline
 		{
 			steps
 			{
-				git credentialsId: '87e66f55-a6ce-4b0f-a2b0-723d607dc227', url: 'https://github.com/heenasharma11/java_maven_CICD_app.git'
+				git credentialsId: '5f7ea1fb-d023-48c3-8f16-7a2d7e055e9e', url: 'https://github.com/TanzeemAlam/jenkins-automation.git'
 			}
 		}
 		stage('Build Code')
