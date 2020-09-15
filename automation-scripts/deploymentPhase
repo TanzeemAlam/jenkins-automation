@@ -9,7 +9,7 @@ pipeline
 			{
 				withCredentials([sshUserPrivateKey(credentialsId: '1e3022b7-7ab7-4c16-862e-606bdc67ab1b', keyFileVariable: 'keyFile')])
 				{
-					sh 'scp -o StrictHostKeyChecking=no -i ${keyFile} maven-project/target/maven-project.war ec2-user@34.219.192.247:/home/ec2-user/apache-tomcat-9.0.37/webapps/'
+					sh 'scp -o StrictHostKeyChecking=no -i ${keyFile} /var/lib/jenkins/workspace/Ci_Pipeline/maven-project/target/maven-project.war ec2-user@34.219.192.247:/home/ec2-user/apache-tomcat-9.0.37/webapps/'
 				}
 			}
 		}
