@@ -1,3 +1,5 @@
+def scmVars
+
 pipeline
 {
 	agent any
@@ -16,7 +18,7 @@ pipeline
 			{
 				script
 				{
-					def scmVars = checkout scm
+					scmVars = checkout scm
 					echo scmVars.GIT_BRANCH
 				}
 			}
