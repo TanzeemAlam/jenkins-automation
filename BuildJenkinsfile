@@ -16,7 +16,7 @@ pipeline
 			{
 				script
 				{
-					def scmVars = checkout scm
+					scmVars = checkout scm
 					echo scmVars
 				}
 			}
