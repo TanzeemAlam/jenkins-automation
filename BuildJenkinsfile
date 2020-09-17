@@ -1,3 +1,5 @@
+def scmVars
+
 pipeline
 {
 	agent any
@@ -14,7 +16,10 @@ pipeline
 		{
 			steps
 			{
-				checkout scm
+				script
+				{
+					scmVars = checkout scm
+				}
 			}
 		}
 
@@ -41,8 +46,7 @@ pipeline
 		{
 			script
 			{
-				echo "${env.BRANCH_NAME}"
-				if (env.BRANCH_NAME == 'master')
+				if (scmVars.GIT_BRANCH == 'origin/master')
 				{
 					build job: 'airwolf-deploy-pipeline'
 				}
