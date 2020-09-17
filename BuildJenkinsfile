@@ -22,7 +22,7 @@ pipeline
 		{
 			steps
 			{
-				build job: 'airwolf-build-job/${env.BRANCH_NAME}'
+				build job: 'airwolf-build-job'
 			}
 		}
 
@@ -41,9 +41,10 @@ pipeline
 		{
 			script
 			{
+				echo "${env.BRANCH_NAME}"
 				if (env.BRANCH_NAME == 'master')
 				{
-					build job: 'airwolf-deploy-pipeline/master'
+					build job: 'airwolf-deploy-pipeline'
 				}
 			}
 		}
