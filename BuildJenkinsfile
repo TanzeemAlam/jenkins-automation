@@ -41,12 +41,24 @@ pipeline
 		{
 			script
 			{
+				def branchName = getCurrentBranch()
+				echo 'My branch is' + branchName
+
+				/*
 				echo "${env.GIT_BRANCH}"
 				if (env.GIT_BRANCH == 'master')
 				{
 					build job: 'airwolf-deploy-pipeline'
 				}
+				*/
 			}
 		}
 	}
+}
+
+def getCurrentBranch () {
+    return sh (
+        script: 'git rev-parse --abbrev-ref HEAD',
+        returnStdout: true
+    ).trim()
 }
