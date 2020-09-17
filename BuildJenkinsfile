@@ -41,8 +41,8 @@ pipeline
 		{
 			script
 			{
-				echo "${env.BRANCH_NAME}"
-				if (env.BRANCH_NAME == 'master')
+				echo "${BRANCH_NAME}"
+				if (BRANCH_NAME == 'master')
 				{
 					build job: 'airwolf-deploy-pipeline'
 				}
