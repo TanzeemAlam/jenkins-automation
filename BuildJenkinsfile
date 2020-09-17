@@ -22,7 +22,7 @@ pipeline
 		{
 			steps
 			{
-				sh 'cd maven-project && mvn clean package'
+				build job: 'airwolf-build-job/${env.BRANCH_NAME}'
 			}
 		}
 
@@ -30,7 +30,7 @@ pipeline
 		{
 			steps
 			{
-				sh 'cd maven-project && mvn test'
+				sh 'mvn test'
 			}
 		}
 	}
@@ -39,7 +39,13 @@ pipeline
 	{
 		success
 		{
-			build job: 'airwolf-deploy-pipeline'
+			script
+			{
+				if (env.BRANCH_NAME == 'master')
+				{
+					build job: 'airwolf-deploy-pipeline/master'
+				}
+			}
 		}
 	}
 }
