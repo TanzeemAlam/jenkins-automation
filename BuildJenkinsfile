@@ -16,8 +16,8 @@ pipeline
 			{
 				script
 				{
-					scmVars = checkout scm
-					echo scmVars.GIT_BRANCH
+					def scmVars = checkout scm
+					echo scmVars
 				}
 			}
 		}
@@ -45,8 +45,7 @@ pipeline
 		{
 			script
 			{
-				echo scmVars.GIT_BRANCH
-				if (scmVars.GIT_BRANCH == 'master')
+				if (scmVars.GIT_BRANCH == 'origin/master')
 				{
 					build job: 'airwolf-deploy-pipeline'
 				}
