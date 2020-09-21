@@ -1,0 +1,33 @@
+---
+- name: Create ec2 instance
+  hosts: hostServer
+  gather_facts: True
+  tasks:
+    - name: Ec2 instance
+      ec2:
+        region: us-west-2
+        group: jenkins_security
+        keypair: newKeyPair
+        instance_type: t2.micro
+        image: ami-0873b46c45c11058d
+        vpc_subnet_id: subnet-037fbf2c8b5a5c43c
+        assign_public_ip: yes
+        wait: yes
+        instance_tags: Name="Dev Server"
+      register: ec2
+
+    - name: Create a new host file for to store deployment servers, if doesn't exists
+      file:
+        path: "~/ansible/inventory/deploymentInventory.txt"
+        state: touch
+
+    - name: Adding dev server group to deployment inventory file
+      local_action: lineinfile line="[devServer]" path=~/ansible/inventory/deploymentInventory.txt
+
+    - name: Adding the ip address of dev server to deployment inventory file
+      local_action: lineinfile line="{{ ec2.instances[0].public_ip }}" path=~/ansible/inventory/deploymentInventory.txt
+
+    - name: Wait for ssh to come up
+      wait_for_connection:
+        delay: 60
+        timeout: 360
