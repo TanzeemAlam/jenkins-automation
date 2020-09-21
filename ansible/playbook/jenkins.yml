@@ -49,3 +49,35 @@
         state: started
         enabled: yes
       become: true
+
+    - name: Creating directory named ansible
+      shell: mkdir ansible
+
+    - name: Creating directory ansible/playbook
+      shell: cd ansible && mkdir playbook
+
+    - name: Creating directory ansible/inventory
+      shell: cd ansible && mkdir inventory
+
+    - name: Downloading ansible playbook for jenkins installation
+      get_url:
+        url: https://github.com/DevOps-Airwolf/jenkins-automation/ansible/playbook/jenkins.yml
+        dest: ~/ansible/playbook/jenkins.yml
+      become: true
+
+    - name: Downloading ansible playbook for creating new ec2
+      get_url:
+        url: https://github.com/DevOps-Airwolf/jenkins-automation/ansible/playbook/ec2.yml
+        dest: ~/ansible/playbook/ec2.yml
+      become: true
+
+    - name: Downloading ansible playbook for tomcat installation
+      get_url:
+        url: https://github.com/DevOps-Airwolf/jenkins-automation/ansible/playbook/tomcat.yml
+        dest: ~/ansible/playbook/tomcat.yml
+      become: true
+
+    - name: Downloading ansible inventory file
+      get_url:
+        url: https://github.com/DevOps-Airwolf/jenkins-automation/ansbile/inventory/inventory.txt
+        dest: ~/ansible/inventory/inventory.txt
