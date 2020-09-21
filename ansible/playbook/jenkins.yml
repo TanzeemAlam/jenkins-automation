@@ -1,0 +1,51 @@
+---
+- name: Ansible script to install and configure Java, Maven and Jenkins on EC2
+  hosts: hostServer
+  tasks:
+    - name: Installing Java 8
+      yum:
+        name: java-1.8*
+        state: latest
+      become: true
+
+    - name: Downloading Maven Package
+      get_url:
+        url:  http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo
+        dest: /etc/yum.repos.d/epel-apache-maven.repo
+      become: true
+
+    - name: Shell command
+      shell: sed -i s/\$releasever/6/g /etc/yum.repos.d/epel-apache-maven.repo
+      become: true
+
+    - name: Installing Maven
+      yum: name=apache-maven state=present update_cache=yes
+      become: true
+
+    - name: Installing  git
+      yum: name=git state=present
+      become: true
+
+    - name: Download Jenkins repo from URL
+      get_url:
+        url: https://pkg.jenkins.io/redhat-stable/jenkins.repo
+        dest: /etc/yum.repos.d/jenkins.repo
+      become: true
+
+    - name: Import GPG key
+      rpm_key:
+        state: present
+        key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+      become: true
+    - name: Install Jenkins
+      yum:
+        name: jenkins
+        state: present
+      become: true
+
+    - name: Start Jenkins service and enable on boot
+      service:
+        name: jenkins
+        state: started
+        enabled: yes
+      become: true
