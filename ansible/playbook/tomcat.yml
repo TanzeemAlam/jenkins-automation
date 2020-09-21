@@ -1,0 +1,5 @@
+---
+- name: Installing tomcat on dev Server
+  hosts: devServer
+  tasks:
+    - name: Installing tomcat
