@@ -2,4 +2,20 @@
 - name: Installing tomcat on dev Server
   hosts: devServer
   tasks:
-    - name: Installing tomcat
+    - name: install java
+      become: yes
+      yum:
+        name: java-1.8.0-openjdk-devel
+        state: present
+    - name: install tomcat
+      unarchive:
+        src: https://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.38/bin/apache-tomcat-9.0.38.tar.gz
+        dest: /home/ec2-user
+        remote_src: yes
+    - name: make startup.sh executable
+      become: yes
+      file:
+        path: /home/ec2-user/apache-tomcat-9.0.37/bin/startup.sh
+        mode: +x
+    - name: start tomcat
+      shell: /home/ec2-user/apache-tomcat-9.0.37/bin/startup.sh
